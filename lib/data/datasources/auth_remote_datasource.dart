@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_pos_apps/core/constants/variables.dart';
+import 'package:flutter_pos_apps/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_pos_apps/data/models/response/auth_response_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,6 +18,19 @@ class AuthRemoteDatasource {
     );
     if (response.statusCode == 200) {
       return right(AuthResponseModel.fromJson(response.body));
+    } else {
+      return left(response.body);
+    }
+  }
+
+  Future<Either<String, String>> logout() async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    final response = await http.post(
+      Uri.parse('${Variables.baseUrl}/api/logout'),
+      headers: {'Authorization': 'Bearer ${authData.token}'},
+    );
+    if (response.statusCode == 200) {
+      return right(response.body);
     } else {
       return left(response.body);
     }

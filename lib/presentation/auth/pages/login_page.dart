@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos_apps/core/assets/assets.gen.dart';
+import 'package:flutter_pos_apps/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_pos_apps/presentation/auth/bloc/login/login_bloc.dart';
 
 import '../../../core/components/buttons.dart';
@@ -79,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               state.maybeWhen(
                 orElse: () {},
                 success: (AuthResponseModel) {
+                  AuthLocalDatasource().saveAuthData(AuthResponseModel);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
