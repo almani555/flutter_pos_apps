@@ -7,6 +7,7 @@ import 'package:flutter_pos_apps/presentation/auth/pages/login_page.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/logout/logout_bloc.dart';
 import 'package:flutter_pos_apps/presentation/home/pages/home_page.dart';
 import 'package:flutter_pos_apps/presentation/home/widgets/nav_item.dart';
+import 'package:flutter_pos_apps/presentation/setting/pages/setting_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -26,9 +27,7 @@ class _DashboardPageState extends State<DashboardPage> {
     const Center(
       child: Text('History'),
     ),
-    const Center(
-      child: Text('Kelola'),
-    ),
+    const SettingPage(),
     // const HomePage(),
     // const OrdersPage(),
     // const Placeholder(),
@@ -44,35 +43,6 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard '),
-        actions: [
-          BlocConsumer<LogoutBloc, LogoutState>(
-            listener: (context, state) {
-              state.maybeMap(
-                orElse: () {},
-                success: (_) {
-                  AuthLocalDatasource().removeAuthData();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ),
-                  );
-                },
-              );
-            },
-            builder: (context, state) {
-              return IconButton(
-                onPressed: () {
-                  context.read<LogoutBloc>().add(const LogoutEvent.logout());
-                },
-                icon: const Icon(Icons.logout),
-              );
-            },
-          ),
-        ],
-      ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(20.0),

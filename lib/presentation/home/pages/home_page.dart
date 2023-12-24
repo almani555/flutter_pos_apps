@@ -53,12 +53,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    //searchResults = products;
+    context.read<ProductBloc>().add(const ProductEvent.fetchLocal());
     super.initState();
   }
 
   void onCategoryTap(int index) {
     searchController.clear();
+    indexValue.value = index;
     String category = 'all';
     switch (index) {
       case 0:

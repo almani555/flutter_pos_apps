@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pos_apps/core/constants/variables.dart';
 import 'package:flutter_pos_apps/core/extensions/int_ext.dart';
@@ -38,11 +39,14 @@ class ProductCard extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(50.0)),
-              child: Image.network(
-                '${Variables.imageBaseUrl}${data.image}',
-                width: 68,
-                height: 68,
-                fit: BoxFit.cover,
+              child: CachedNetworkImage(
+                imageUrl: '${Variables.imageBaseUrl}${data.image}',
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => Icon(
+                  Icons.food_bank_outlined,
+                  size: 80,
+                ),
               ),
             ),
           ),
