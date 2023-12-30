@@ -1,6 +1,6 @@
 # flutter_pos_apps
 
-Task Week 2 FIC 11 Flutter Add Product, Checkout, Order and Save to Local DB
+Task Week 3 FIC 11 Flutter Add Product, Checkout, Order and Save to Local DB
 
 A new Flutter project.
 
