@@ -108,4 +108,34 @@ class Product {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  @override
+  bool operator ==(covariant Product other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.name == name &&
+        other.description == description &&
+        other.price == price &&
+        other.stock == stock &&
+        other.category == category &&
+        other.image == image &&
+        other.isBestSeller == isBestSeller &&
+        other.createdAt == createdAt &&
+        other.updatedAt == updatedAt;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        description.hashCode ^
+        price.hashCode ^
+        stock.hashCode ^
+        category.hashCode ^
+        image.hashCode ^
+        isBestSeller.hashCode ^
+        createdAt.hashCode ^
+        updatedAt.hashCode;
+  }
 }
