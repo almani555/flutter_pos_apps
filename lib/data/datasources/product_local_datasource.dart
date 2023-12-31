@@ -7,6 +7,8 @@ class ProductLocalDatasource {
   static final ProductLocalDatasource instance = ProductLocalDatasource._init();
 
   final String tableProducts = 'products';
+  final String tableOrders = 'orders';
+  final String tableOrderItems = 'order_items';
 
   static Database? _database;
 
@@ -33,6 +35,35 @@ class ProductLocalDatasource {
         is_best_seller INTEGER
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE $tableOrders(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nominal INTEGER,
+        payment_method TEXT,
+        total_item INTEGER,
+        id_kasir INTEGER,
+        nama_kasir TEXT,
+        is_sync INTEGER DEFAULT 0
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE $tableOrderItems(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_order INTEGER,
+        id_product INTEGER,
+        quantity INTEGER,
+        price INTEGER
+      )
+    ''');
+  }
+
+  //save order
+  Future<int> saveOrder(List<OrderItem> orders) async {
+    final db = await instance.database;
+    int id = await db.insert(tableOrders, orders.toMap());
+    return id;
   }
 
   Future<Database> get database async {

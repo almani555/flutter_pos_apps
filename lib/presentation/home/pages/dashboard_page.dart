@@ -3,6 +3,7 @@ import 'package:flutter_pos_apps/core/assets/assets.gen.dart';
 import 'package:flutter_pos_apps/core/constants/colors.dart';
 import 'package:flutter_pos_apps/presentation/home/pages/home_page.dart';
 import 'package:flutter_pos_apps/presentation/home/widgets/nav_item.dart';
+import 'package:flutter_pos_apps/presentation/order/pages/order_page.dart';
 import 'package:flutter_pos_apps/presentation/setting/pages/setting_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -17,9 +18,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const Center(
-      child: Text('Order'),
-    ),
+    const OrderPage(),
     const Center(
       child: Text('History'),
     ),
