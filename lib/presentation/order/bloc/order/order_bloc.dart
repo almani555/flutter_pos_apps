@@ -21,6 +21,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           event.paymentMethod,
           0));
     });
+
     on<_AddNominalBayar>((event, emit) {
       var currentState = _Success([], 0, 0, '', 0);
       emit(const _Loading());

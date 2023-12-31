@@ -8,6 +8,7 @@ import 'package:flutter_pos_apps/presentation/home/models/order_item.dart';
 import 'package:flutter_pos_apps/presentation/order/models/order_model.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/order_card.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/payment_cash_dialog.dart';
+import 'package:flutter_pos_apps/presentation/order/widgets/payment_qris_dialog.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/process_button.dart';
 
 class OrderPage extends StatefulWidget {
@@ -124,11 +125,11 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   );
                 } else if (indexValue.value == 2) {
-                  // showDialog(
-                  //   context: context,
-                  //   barrierDismissible: false,
-                  //   builder: (context) => const PaymentQrisDialog(),
-                  // );
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const PaymentQrisDialog(),
+                  );
                 }
               },
             ),
