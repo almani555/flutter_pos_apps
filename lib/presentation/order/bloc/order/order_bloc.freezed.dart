@@ -505,8 +505,14 @@ mixin _$OrderState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)
+    required TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)
         success,
     required TResult Function(String message) error,
   }) =>
@@ -515,8 +521,14 @@ mixin _$OrderState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult? Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult? Function(String message)? error,
   }) =>
@@ -525,8 +537,14 @@ mixin _$OrderState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -617,8 +635,14 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)
+    required TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)
         success,
     required TResult Function(String message) error,
   }) {
@@ -630,8 +654,14 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult? Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult? Function(String message)? error,
   }) {
@@ -643,8 +673,14 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -737,8 +773,14 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)
+    required TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)
         success,
     required TResult Function(String message) error,
   }) {
@@ -750,8 +792,14 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult? Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult? Function(String message)? error,
   }) {
@@ -763,8 +811,14 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -828,7 +882,9 @@ abstract class _$$SuccessImplCopyWith<$Res> {
       int totalQuantity,
       int totalPrice,
       String paymentMethod,
-      int nominalBayar});
+      int nominalBayar,
+      int idKasir,
+      String namaKasir});
 }
 
 /// @nodoc
@@ -847,6 +903,8 @@ class __$$SuccessImplCopyWithImpl<$Res>
     Object? totalPrice = null,
     Object? paymentMethod = null,
     Object? nominalBayar = null,
+    Object? idKasir = null,
+    Object? namaKasir = null,
   }) {
     return _then(_$SuccessImpl(
       null == products
@@ -869,6 +927,14 @@ class __$$SuccessImplCopyWithImpl<$Res>
           ? _value.nominalBayar
           : nominalBayar // ignore: cast_nullable_to_non_nullable
               as int,
+      null == idKasir
+          ? _value.idKasir
+          : idKasir // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == namaKasir
+          ? _value.namaKasir
+          : namaKasir // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -876,8 +942,14 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<OrderItem> products, this.totalQuantity,
-      this.totalPrice, this.paymentMethod, this.nominalBayar)
+  const _$SuccessImpl(
+      final List<OrderItem> products,
+      this.totalQuantity,
+      this.totalPrice,
+      this.paymentMethod,
+      this.nominalBayar,
+      this.idKasir,
+      this.namaKasir)
       : _products = products;
 
   final List<OrderItem> _products;
@@ -896,10 +968,14 @@ class _$SuccessImpl implements _Success {
   final String paymentMethod;
   @override
   final int nominalBayar;
+  @override
+  final int idKasir;
+  @override
+  final String namaKasir;
 
   @override
   String toString() {
-    return 'OrderState.success(products: $products, totalQuantity: $totalQuantity, totalPrice: $totalPrice, paymentMethod: $paymentMethod, nominalBayar: $nominalBayar)';
+    return 'OrderState.success(products: $products, totalQuantity: $totalQuantity, totalPrice: $totalPrice, paymentMethod: $paymentMethod, nominalBayar: $nominalBayar, idKasir: $idKasir, namaKasir: $namaKasir)';
   }
 
   @override
@@ -915,7 +991,10 @@ class _$SuccessImpl implements _Success {
             (identical(other.paymentMethod, paymentMethod) ||
                 other.paymentMethod == paymentMethod) &&
             (identical(other.nominalBayar, nominalBayar) ||
-                other.nominalBayar == nominalBayar));
+                other.nominalBayar == nominalBayar) &&
+            (identical(other.idKasir, idKasir) || other.idKasir == idKasir) &&
+            (identical(other.namaKasir, namaKasir) ||
+                other.namaKasir == namaKasir));
   }
 
   @override
@@ -925,7 +1004,9 @@ class _$SuccessImpl implements _Success {
       totalQuantity,
       totalPrice,
       paymentMethod,
-      nominalBayar);
+      nominalBayar,
+      idKasir,
+      namaKasir);
 
   @JsonKey(ignore: true)
   @override
@@ -938,13 +1019,19 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)
+    required TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)
         success,
     required TResult Function(String message) error,
   }) {
-    return success(
-        products, totalQuantity, totalPrice, paymentMethod, nominalBayar);
+    return success(products, totalQuantity, totalPrice, paymentMethod,
+        nominalBayar, idKasir, namaKasir);
   }
 
   @override
@@ -952,13 +1039,19 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult? Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(
-        products, totalQuantity, totalPrice, paymentMethod, nominalBayar);
+    return success?.call(products, totalQuantity, totalPrice, paymentMethod,
+        nominalBayar, idKasir, namaKasir);
   }
 
   @override
@@ -966,15 +1059,21 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(
-          products, totalQuantity, totalPrice, paymentMethod, nominalBayar);
+      return success(products, totalQuantity, totalPrice, paymentMethod,
+          nominalBayar, idKasir, namaKasir);
     }
     return orElse();
   }
@@ -1023,13 +1122,17 @@ abstract class _Success implements OrderState {
       final int totalQuantity,
       final int totalPrice,
       final String paymentMethod,
-      final int nominalBayar) = _$SuccessImpl;
+      final int nominalBayar,
+      final int idKasir,
+      final String namaKasir) = _$SuccessImpl;
 
   List<OrderItem> get products;
   int get totalQuantity;
   int get totalPrice;
   String get paymentMethod;
   int get nominalBayar;
+  int get idKasir;
+  String get namaKasir;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1101,8 +1204,14 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)
+    required TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)
         success,
     required TResult Function(String message) error,
   }) {
@@ -1114,8 +1223,14 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult? Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult? Function(String message)? error,
   }) {
@@ -1127,8 +1242,14 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<OrderItem> products, int totalQuantity,
-            int totalPrice, String paymentMethod, int nominalBayar)?
+    TResult Function(
+            List<OrderItem> products,
+            int totalQuantity,
+            int totalPrice,
+            String paymentMethod,
+            int nominalBayar,
+            int idKasir,
+            String namaKasir)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),

@@ -1,4 +1,6 @@
 import 'package:flutter_pos_apps/data/models/response/product_response_model.dart';
+import 'package:flutter_pos_apps/presentation/home/models/order_item.dart';
+import 'package:flutter_pos_apps/presentation/order/models/order_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ProductLocalDatasource {
@@ -60,16 +62,41 @@ class ProductLocalDatasource {
   }
 
   //save order
-  Future<int> saveOrder(List<OrderItem> orders) async {
+  Future<int> saveOrder(OrderModel order) async {
     final db = await instance.database;
-    int id = await db.insert(tableOrders, orders.toMap());
+    int id = await db.insert(tableOrders, order.toMapForLocal());
+    for (var orderItem in order.orders) {
+      await db.insert(tableOrderItems, orderItem.toMapForLocal(id));
+    }
     return id;
+  }
+
+  //get order by isSync = 0
+  Future<List<OrderModel>> getOrderByIsSync() async {
+    final db = await instance.database;
+    final result = await db.query(tableOrders, where: 'is_sync = 0');
+    return result.map((e) => OrderModel.fromLocalMap(e)).toList();
+  }
+
+  //get order item by id order
+  Future<List<OrderItem>> getOrderItemByOrderId(int idOrder) async {
+    final db = await instance.database;
+    final result =
+        await db.query(tableOrderItems, where: 'id_order = $idOrder');
+    return result.map((e) => OrderItem.fromMap(e)).toList();
+  }
+
+  //update isSync order by id
+  Future<int> updateIsSyncOrderById(int id) async {
+    final db = await instance.database;
+    return await db.update(tableOrders, {'is_sync': 1},
+        where: 'id = ?', whereArgs: [id]);
   }
 
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('pos4.db');
+    _database = await _initDB('pos1.db');
     return _database!;
   }
 

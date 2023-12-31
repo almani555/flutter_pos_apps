@@ -134,7 +134,7 @@ class ProductCard extends StatelessWidget {
                                           (element) => element.product == data)
                                       .quantity
                                       .toString(),
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ),
                             )

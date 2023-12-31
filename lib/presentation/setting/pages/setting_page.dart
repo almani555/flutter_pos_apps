@@ -10,6 +10,7 @@ import 'package:flutter_pos_apps/data/datasources/product_local_datasource.dart'
 import 'package:flutter_pos_apps/presentation/auth/pages/login_page.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/logout/logout_bloc.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/product/product_bloc.dart';
+import 'package:flutter_pos_apps/presentation/order/models/order_model.dart';
 import 'package:flutter_pos_apps/presentation/setting/pages/manage_product_page.dart';
 
 class SettingPage extends StatefulWidget {
@@ -26,8 +27,7 @@ class _SettingPageState extends State<SettingPage> {
         appBar: AppBar(
           title: const Text('Setting'),
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(16.0),
+        body: Column(
           children: [
             Row(
               children: [
@@ -47,7 +47,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ],
             ),
-            const SpaceHeight(60),
+            const SpaceHeight(30),
             BlocConsumer<ProductBloc, ProductState>(
               listener: (context, state) {
                 state.maybeMap(
@@ -103,6 +103,26 @@ class _SettingPageState extends State<SettingPage> {
                 );
               },
             ),
+            const Divider(),
+            FutureBuilder<List<OrderModel>>(
+                future: ProductLocalDatasource.instance.getOrderByIsSync(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                                snapshot.data![index].paymentMethod.toString()),
+                          );
+                        },
+                        itemCount: snapshot.data!.length,
+                      ),
+                    );
+                  } else {
+                    return const Text('Tidak ada data');
+                  }
+                }),
           ],
         ));
   }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos_apps/core/assets/assets.gen.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_pos_apps/core/components/menu_button.dart';
 import 'package:flutter_pos_apps/core/components/spaces.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_pos_apps/presentation/home/models/order_item.dart';
+import 'package:flutter_pos_apps/presentation/order/bloc/order/order_bloc.dart';
 import 'package:flutter_pos_apps/presentation/order/models/order_model.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/order_card.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/payment_cash_dialog.dart';
@@ -40,6 +43,7 @@ class _OrderPageState extends State<OrderPage> {
   //       (previousValue, element) =>
   //           previousValue + element.product.price * element.quantity);
   // }
+  List<OrderItem> orders = [];
   int totalPrice = 0;
 
   @override
@@ -68,6 +72,7 @@ class _OrderPageState extends State<OrderPage> {
                 child: Text('No Data'),
               );
             }
+            orders.addAll(data);
             totalPrice = price;
             return ListView.separated(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -99,7 +104,12 @@ class _OrderPageState extends State<OrderPage> {
                     iconPath: Assets.icons.cash.path,
                     label: 'Tunai',
                     isActive: value == 1,
-                    onPressed: () => indexValue.value = 1,
+                    onPressed: () {
+                      indexValue.value = 1;
+                      context
+                          .read<OrderBloc>()
+                          .add(OrderEvent.addPaymentMethod('Tunai', orders));
+                    },
                   ),
                   const SpaceWidth(10.0),
                   MenuButton(

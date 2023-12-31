@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos_apps/core/extensions/build_context_ext.dart';
 import 'package:flutter_pos_apps/core/extensions/date_time_ext.dart';
 import 'package:flutter_pos_apps/core/extensions/int_ext.dart';
+import 'package:flutter_pos_apps/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_pos_apps/presentation/home/pages/dashboard_page.dart';
+import 'package:flutter_pos_apps/presentation/order/bloc/order/order_bloc.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/buttons.dart';
@@ -29,59 +32,80 @@ class PaymentSuccessDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SpaceHeight(12.0),
-          const _LabelValue(
-            label: 'METODE PEMBAYARAN',
-            value: 'Tunai',
-          ),
-          const Divider(height: 36.0),
-          _LabelValue(
-            label: 'TOTAL PEMBELIAN',
-            value: 123000.currencyFormatRp,
-          ),
-          const Divider(height: 36.0),
-          _LabelValue(
-            label: 'NOMINAL BAYAR',
-            value: 123000.currencyFormatRp,
-          ),
-          const Divider(height: 36.0),
-          _LabelValue(
-            label: 'WAKTU PEMBAYARAN',
-            value: DateTime.now().toFormattedTime(),
-          ),
-          const SpaceHeight(40.0),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: Button.filled(
-                  onPressed: () {
-                    context.pushReplacement(const DashboardPage());
-                  },
-                  label: 'Selesai',
-                  fontSize: 13,
-                ),
-              ),
-              const SpaceWidth(10.0),
-              Flexible(
-                child: Button.outlined(
-                  onPressed: () async {
-                    // final ticket = await CwbPrint.instance.bluetoothStart();
-                    // final result =
-                    //     await PrintBluetoothThermal.writeBytes(ticket);
-                  },
-                  label: 'Print',
-                  icon: Assets.icons.print.svg(),
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-        ],
+      content: BlocBuilder<OrderBloc, OrderState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+              orElse: () => const SizedBox.shrink(),
+              success:
+                  (data, qty, total, payment, nominal, idKasir, namaKasir) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SpaceHeight(12.0),
+                    const _LabelValue(
+                      label: 'METODE PEMBAYARAN',
+                      value: 'Tunai',
+                    ),
+                    const Divider(height: 36.0),
+                    _LabelValue(
+                      label: 'TOTAL PEMBELIAN',
+                      value: total.currencyFormatRp,
+                    ),
+                    const Divider(height: 36.0),
+                    _LabelValue(
+                      label: 'NOMINAL BAYAR',
+                      value: nominal.currencyFormatRp,
+                    ),
+                    const Divider(height: 36.0),
+                    _LabelValue(
+                      label: 'WAKTU PEMBAYARAN',
+                      value: DateTime.now().toFormattedTime(),
+                    ),
+                    const SpaceHeight(40.0),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Button.filled(
+                            onPressed: () {
+                              context
+                                  .read<CheckoutBloc>()
+                                  .add(const CheckoutEvent.started());
+                              context
+                                  .read<OrderBloc>()
+                                  .add(const OrderEvent.started());
+                              context.pushReplacement(const DashboardPage());
+                            },
+                            label: 'Selesai',
+                            fontSize: 13,
+                          ),
+                        ),
+                        const SpaceWidth(10.0),
+                        Flexible(
+                          child: Button.outlined(
+                            onPressed: () async {
+                              // final ticket = await CwbPrint.instance.bluetoothStart();
+                              // final result =
+                              //     await PrintBluetoothThermal.writeBytes(ticket);
+                              context
+                                  .read<CheckoutBloc>()
+                                  .add(const CheckoutEvent.started());
+                              context
+                                  .read<OrderBloc>()
+                                  .add(const OrderEvent.started());
+                            },
+                            label: 'Print',
+                            icon: Assets.icons.print.svg(),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              });
+        },
       ),
     );
   }
