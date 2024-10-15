@@ -37,17 +37,17 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 130.0),
               child: Image.asset(
-                Assets.images.logo.path,
+                Assets.images.logo3.path,
                 width: 100,
                 height: 100,
               )),
           const SpaceHeight(24.0),
           const Center(
             child: Text(
-              "POS Batch 11",
+              "Point of Sales",
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
           const SpaceHeight(8.0),
           const Center(
             child: Text(
-              "Masuk untuk kasir",
+              "(Masuk untuk kasir)",
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
@@ -79,8 +79,8 @@ class _LoginPageState extends State<LoginPage> {
             listener: (context, state) {
               state.maybeWhen(
                 orElse: () {},
-                success: (AuthResponseModel) {
-                  AuthLocalDatasource().saveAuthData(AuthResponseModel);
+                success: (authResponseModel) {
+                  AuthLocalDatasource().saveAuthData(authResponseModel);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

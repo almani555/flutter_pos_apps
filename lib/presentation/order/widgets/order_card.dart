@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos_apps/core/constants/variables.dart';
 import 'package:flutter_pos_apps/core/extensions/int_ext.dart';
@@ -60,16 +62,23 @@ class OrderCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          data.product.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            data.product.name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              overflow: TextOverflow.clip,
+                            ),
                           ),
                         ),
-                        Text(
-                          data.product.price.currencyFormatRp,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
+                        Expanded(
+                          child: Text(
+                            textAlign: TextAlign.right,
+                            data.product.price.currencyFormatRp,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],
@@ -83,6 +92,7 @@ class OrderCard extends StatelessWidget {
                               if (data.quantity > 1) {
                                 context.read<CheckoutBloc>().add(
                                     CheckoutEvent.removeCheckout(data.product));
+                                onDeleteTap();
                               }
                             },
                             child: Container(
@@ -125,7 +135,11 @@ class OrderCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: IconButton(
-            onPressed: onDeleteTap,
+            onPressed: () {
+              context
+                  .read<CheckoutBloc>()
+                  .add(CheckoutEvent.removeItemCheckout(data.product));
+            },
             icon: const Icon(
               Icons.highlight_off,
               color: AppColors.primary,

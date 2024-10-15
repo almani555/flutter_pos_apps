@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +8,6 @@ import 'package:flutter_pos_apps/core/components/spaces.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_pos_apps/presentation/home/models/order_item.dart';
 import 'package:flutter_pos_apps/presentation/order/bloc/order/order_bloc.dart';
-import 'package:flutter_pos_apps/presentation/order/models/order_model.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/order_card.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/payment_cash_dialog.dart';
 import 'package:flutter_pos_apps/presentation/order/widgets/payment_qris_dialog.dart';
@@ -23,39 +22,30 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   final indexValue = ValueNotifier(0);
-  // final List<OrderModel> orders = [
-  //   OrderModel(
-  //     image: Assets.images.f1.path,
-  //     name: 'Nutty Oat Latte',
-  //     price: 39000,
-  //   ),
-  //   OrderModel(
-  //     image: Assets.images.f2.path,
-  //     name: 'Iced Latte',
-  //     price: 24000,
-  //   ),
-  // ];
-  // List<OrderItem> orders = [];
 
-  // int calculateTotalPrice(List<OrderItem> orders) {
-  //   return orders.fold(
-  //       0,
-  //       (previousValue, element) =>
-  //           previousValue + element.product.price * element.quantity);
-  // }
   List<OrderItem> orders = [];
   int totalPrice = 0;
+
+  @override
+  void initState() {
+    context.read<OrderBloc>().add(const OrderEvent.started());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     const paddingHorizontal = EdgeInsets.symmetric(horizontal: 16.0);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order Detail'),
+        title: const Text('Order Detail',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read<CheckoutBloc>().add(const CheckoutEvent.started());
+              context.read<OrderBloc>().add(const OrderEvent.started());
+            },
             icon: Assets.icons.delete.svg(),
           ),
         ],
@@ -116,7 +106,12 @@ class _OrderPageState extends State<OrderPage> {
                     iconPath: Assets.icons.qrCode.path,
                     label: 'QRIS',
                     isActive: value == 2,
-                    onPressed: () => indexValue.value = 2,
+                    onPressed: () {
+                      indexValue.value = 2;
+                      context
+                          .read<OrderBloc>()
+                          .add(OrderEvent.addPaymentMethod('QRIS', orders));
+                    },
                   ),
                   const SpaceWidth(10.0),
                 ],
@@ -138,7 +133,9 @@ class _OrderPageState extends State<OrderPage> {
                   showDialog(
                     context: context,
                     barrierDismissible: false,
-                    builder: (context) => const PaymentQrisDialog(),
+                    builder: (context) => PaymentQrisDialog(
+                      price: totalPrice,
+                    ),
                   );
                 }
               },

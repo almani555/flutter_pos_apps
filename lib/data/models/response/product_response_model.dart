@@ -34,6 +34,7 @@ class ProductResponseModel {
 
 class Product {
   final int? id;
+  final int? productId;
   final String name;
   final String? description;
   final int price;
@@ -46,6 +47,7 @@ class Product {
 
   Product({
     this.id,
+    this.productId,
     required this.name,
     this.description,
     required this.price,
@@ -63,6 +65,7 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
         id: json["id"],
+        productId: json["product_id"],
         name: json["name"],
         description: json["description"] ?? '',
         price: json["price"],
@@ -75,6 +78,17 @@ class Product {
       );
 
   Map<String, dynamic> toMap() => {
+        "product_id": productId,
+        "name": name,
+        "price": price,
+        "stock": stock,
+        "category": category,
+        "image": image,
+        "is_best_seller": isBestSeller ? 1 : 0,
+      };
+
+  Map<String, dynamic> toMapLocal() => {
+        "product_id": id,
         "name": name,
         "price": price,
         "stock": stock,
@@ -85,6 +99,7 @@ class Product {
 
   Product copyWith({
     int? id,
+    int? productId,
     String? name,
     String? description,
     int? price,
@@ -97,6 +112,7 @@ class Product {
   }) {
     return Product(
       id: id ?? this.id,
+      productId: productId ?? this.productId,
       name: name ?? this.name,
       description: description ?? this.description,
       price: price ?? this.price,

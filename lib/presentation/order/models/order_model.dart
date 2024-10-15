@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_pos_apps/presentation/home/models/order_item.dart';
 
 class OrderModel {
+  final int? id;
   final String paymentMethod;
   final int nominalBayar;
   final List<OrderItem> orders;
@@ -11,8 +12,10 @@ class OrderModel {
   final int totalPrice;
   final int idKasir;
   final String namaKasir;
+  final String transactionTime;
   final bool isSync;
   OrderModel({
+    this.id,
     required this.paymentMethod,
     required this.nominalBayar,
     required this.orders,
@@ -20,6 +23,7 @@ class OrderModel {
     required this.totalPrice,
     required this.idKasir,
     required this.namaKasir,
+    required this.transactionTime,
     required this.isSync,
   });
 
@@ -44,6 +48,7 @@ class OrderModel {
       'id_kasir': idKasir,
       'nama_kasir': namaKasir,
       'is_sync': isSync ? 1 : 0,
+      'transaction_time': transactionTime,
     };
   }
 
@@ -54,6 +59,7 @@ class OrderModel {
     //     ),
     //   ),
     return OrderModel(
+      id: map['id']?.toInt() ?? 0,
       paymentMethod: map['payment_method'] as String,
       nominalBayar: map['nominal'] as int,
       orders: [],
@@ -62,11 +68,13 @@ class OrderModel {
       idKasir: map['id_kasir'] as int,
       namaKasir: map['nama_kasir'] as String,
       isSync: map['is_sync'] == 1 ? true : false,
+      transactionTime: map['transaction_time'] ?? '',
     );
   }
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
+      id: map['id']?.toInt() ?? 0,
       paymentMethod: map['paymentMethod'] as String,
       nominalBayar: map['nominalBayar'] as int,
       orders: List<OrderItem>.from(
@@ -78,6 +86,7 @@ class OrderModel {
       totalPrice: map['totalPrice'] as int,
       idKasir: map['idKasir'] as int,
       namaKasir: map['namaKasir'] as String,
+      transactionTime: map['transactionTime'] ?? '',
       isSync: map['isSync'] as bool,
     );
   }

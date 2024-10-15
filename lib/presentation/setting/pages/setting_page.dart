@@ -11,7 +11,10 @@ import 'package:flutter_pos_apps/presentation/auth/pages/login_page.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/logout/logout_bloc.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/product/product_bloc.dart';
 import 'package:flutter_pos_apps/presentation/order/models/order_model.dart';
+import 'package:flutter_pos_apps/presentation/setting/pages/manage_printer_page.dart';
 import 'package:flutter_pos_apps/presentation/setting/pages/manage_product_page.dart';
+import 'package:flutter_pos_apps/presentation/setting/pages/server_key_page.dart';
+import 'package:flutter_pos_apps/presentation/setting/pages/sync_data_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -25,9 +28,12 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Setting'),
+          title: const Text('Kelola Aplikasi',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          centerTitle: true,
         ),
-        body: Column(
+        body: ListView(
+          padding: const EdgeInsets.all(20.0),
           children: [
             Row(
               children: [
@@ -41,44 +47,30 @@ class _SettingPageState extends State<SettingPage> {
                 MenuButton(
                   iconPath: Assets.images.managePrinter.path,
                   label: 'Kelola Printer',
-                  onPressed:
-                      () {}, //=> context.push(const ManagePrinterPage()),
+                  onPressed: () => context.push(const ManagePrinterPage()),
+                  isImage: true,
+                ),
+              ],
+            ),
+            const SpaceHeight(20),
+            Row(
+              children: [
+                MenuButton(
+                  iconPath: Assets.images.manageApi.path,
+                  label: 'QRIS Server Key',
+                  onPressed: () => context.push(const ServerKeyPage()),
+                  isImage: true,
+                ),
+                const SpaceWidth(15.0),
+                MenuButton(
+                  iconPath: Assets.images.managePrinterx.path,
+                  label: 'Singkronisasi Data',
+                  onPressed: () => context.push(const SyncDataPage()),
                   isImage: true,
                 ),
               ],
             ),
             const SpaceHeight(30),
-            BlocConsumer<ProductBloc, ProductState>(
-              listener: (context, state) {
-                state.maybeMap(
-                    orElse: () {},
-                    success: (_) async {
-                      await ProductLocalDatasource.instance.removeAllProduct();
-                      await ProductLocalDatasource.instance
-                          .insertAllProduct(_.products.toList());
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          backgroundColor: AppColors.primary,
-                          content: Text(
-                            'Sync data success',
-                          )));
-                    });
-              },
-              builder: (context, state) {
-                return state.maybeWhen(orElse: () {
-                  return ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<ProductBloc>()
-                            .add(const ProductEvent.fetch());
-                      },
-                      child: const Text('Sync Data'));
-                }, loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                });
-              },
-            ),
             BlocConsumer<LogoutBloc, LogoutState>(
               listener: (context, state) {
                 state.maybeMap(
@@ -103,26 +95,6 @@ class _SettingPageState extends State<SettingPage> {
                 );
               },
             ),
-            const Divider(),
-            FutureBuilder<List<OrderModel>>(
-                future: ProductLocalDatasource.instance.getOrderByIsSync(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(
-                                snapshot.data![index].paymentMethod.toString()),
-                          );
-                        },
-                        itemCount: snapshot.data!.length,
-                      ),
-                    );
-                  } else {
-                    return const Text('Tidak ada data');
-                  }
-                }),
           ],
         ));
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_pos_apps/core/constants/variables.dart';
 import 'package:flutter_pos_apps/data/datasources/auth_local_datasource.dart';

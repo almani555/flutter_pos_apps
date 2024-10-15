@@ -114,6 +114,17 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/point-of-sale.png
+  AssetGenImage get logo2 =>
+      const AssetGenImage('assets/images/point-of-sale.png');
+
+  /// File path: assets/images/nemo.png
+  AssetGenImage get logo3 => const AssetGenImage('assets/images/nemo.png');
+
+  /// File path: assets/images/manage_api.png
+  AssetGenImage get manageApi =>
+      const AssetGenImage('assets/images/manage_api.png');
+
   /// File path: assets/images/manage_printer.png
   AssetGenImage get managePrinter =>
       const AssetGenImage('assets/images/manage_printer.png');
@@ -137,6 +148,7 @@ class $AssetsImagesGen {
         f7,
         f8,
         logo,
+        manageApi,
         managePrinter,
         managePrinterx,
         manageProduct

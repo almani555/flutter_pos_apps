@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos_apps/core/extensions/build_context_ext.dart';
 import 'package:flutter_pos_apps/core/extensions/date_time_ext.dart';
 import 'package:flutter_pos_apps/core/extensions/int_ext.dart';
+import 'package:flutter_pos_apps/data/dataoutputs/cwb_print.dart';
 import 'package:flutter_pos_apps/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_pos_apps/presentation/home/pages/dashboard_page.dart';
 import 'package:flutter_pos_apps/presentation/order/bloc/order/order_bloc.dart';
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/buttons.dart';
@@ -38,14 +40,15 @@ class PaymentSuccessDialog extends StatelessWidget {
               orElse: () => const SizedBox.shrink(),
               success:
                   (data, qty, total, payment, nominal, idKasir, namaKasir) {
+                context.read<CheckoutBloc>().add(const CheckoutEvent.started());
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SpaceHeight(12.0),
-                    const _LabelValue(
+                    _LabelValue(
                       label: 'METODE PEMBAYARAN',
-                      value: 'Tunai',
+                      value: payment,
                     ),
                     const Divider(height: 36.0),
                     _LabelValue(
@@ -69,12 +72,6 @@ class PaymentSuccessDialog extends StatelessWidget {
                         Flexible(
                           child: Button.filled(
                             onPressed: () {
-                              context
-                                  .read<CheckoutBloc>()
-                                  .add(const CheckoutEvent.started());
-                              context
-                                  .read<OrderBloc>()
-                                  .add(const OrderEvent.started());
                               context.pushReplacement(const DashboardPage());
                             },
                             label: 'Selesai',
@@ -85,15 +82,17 @@ class PaymentSuccessDialog extends StatelessWidget {
                         Flexible(
                           child: Button.outlined(
                             onPressed: () async {
-                              // final ticket = await CwbPrint.instance.bluetoothStart();
-                              // final result =
-                              //     await PrintBluetoothThermal.writeBytes(ticket);
-                              context
-                                  .read<CheckoutBloc>()
-                                  .add(const CheckoutEvent.started());
-                              context
-                                  .read<OrderBloc>()
-                                  .add(const OrderEvent.started());
+                              final printValue =
+                                  await CwbPrint.instance.printOrder(
+                                data,
+                                qty,
+                                total,
+                                payment,
+                                nominal,
+                                namaKasir,
+                              );
+                              await PrintBluetoothThermal.writeBytes(
+                                  printValue);
                             },
                             label: 'Print',
                             icon: Assets.icons.print.svg(),

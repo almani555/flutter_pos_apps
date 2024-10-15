@@ -38,20 +38,20 @@ class ProductCard extends StatelessWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+                  shape: BoxShape.rectangle,
                   color: AppColors.disabled.withOpacity(0.4),
                 ),
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+                  borderRadius: const BorderRadius.all(Radius.zero),
                   child: CachedNetworkImage(
-                    width: 100,
-                    height: 100,
+                    width: 65,
+                    height: 65,
                     imageUrl: '${Variables.imageBaseUrl}${data.image}',
                     placeholder: (context, url) =>
                         const CircularProgressIndicator(),
                     errorWidget: (context, url, error) => const Icon(
                       Icons.food_bank_outlined,
-                      size: 100,
+                      size: 65,
                     ),
                   ),
                 ),
